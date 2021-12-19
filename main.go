@@ -19,6 +19,7 @@ var (
 	gauge       = prometheus.NewGauge(
 		prometheus.GaugeOpts{
 			Namespace:   "vault",
+			Subsystem:   "core",
 			Name:        "ping",
 			Help:        "Liveness Check of Vault from Given Cluster",
 			ConstLabels: prometheus.Labels{"env": csi_env, "cluster": csi_cluster},

@@ -1,35 +1,44 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
-    name: vault-monitor
-  name: vault-monitor
-  annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/port: '8080'
+    app: vault-monitor
+  name: prometheus-vault-monitor
 spec:
-  containers:
-    - name: vault
-      image: docker-sandbox.infra.cloudera.com/pyadav/golang_vaultmonitor:latest
-      env:
-        - name: CSI_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: CSI_SACC
-          value: default
-      envFrom:
-      - configMapRef:
+  selector:
+    matchLabels:
+      app: vault-monitor
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vault-monitor
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8080'
+    spec:
+      containers:
+      - name: vault
+        image:  "docker-sandbox.infra.cloudera.com/pyadav/golang_vaultmonitor:latest"
+        env:
+          - name: CSI_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: CSI_SACC
+            value: "default"
+        envFrom:
+        - configMapRef:
+            name: "vault"
+        volumeMounts:
+        - mountPath: /etc/vault
           name: vault
-      volumeMounts:
-      - mountPath: /etc/vault
-        name: vault
-      ports:
-        - containerPort: 8080
-  volumes:
-  - name: vault
-    secret :
-        secretName: vault
-        items:
-        - key: vault.pem
-          path: vault.pem
+        ports:
+          - containerPort: 8080
+      volumes:
+      - name: vault
+        secret :
+            secretName: "vault"
+            items:
+            - key: "vault.pem"
+              path: vault.pem
