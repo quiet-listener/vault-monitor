@@ -22,7 +22,7 @@ var (
 			Subsystem:   "core",
 			Name:        "ping",
 			Help:        "Liveness Check of Vault from Given Cluster",
-			ConstLabels: prometheus.Labels{"env": csi_env, "cluster": csi_cluster},
+			ConstLabels: prometheus.Labels{"account": csi_env, "cluster": csi_cluster},
 		})
 )
 
