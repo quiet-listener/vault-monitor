@@ -3,7 +3,7 @@
 go 1.16
 
 require (
-	github.com/hashicorp/go-cleanhttp latest
+	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/vault/api v1.3.0
 	github.com/hashicorp/vault/api/auth/kubernetes v0.1.0
 
