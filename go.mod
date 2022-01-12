@@ -1,5 +1,3 @@
-//module github.infra.cloudera.com/thunderhead/datadog-iamauth-secret-creater
-
 go 1.16
 
 require (
