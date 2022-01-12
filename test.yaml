@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: vault
-        image:  "docker-sandbox.infra.cloudera.com/pyadav/golang_vaultmonitor:latest"
+        image:  "image_url"
         env:
           - name: CSI_NAMESPACE
             valueFrom:
